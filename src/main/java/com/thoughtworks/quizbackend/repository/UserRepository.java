@@ -7,7 +7,7 @@ import java.util.List;
 
 @Repository
 public interface UserRepository {
-    User save(User user);
+    long save(User user);
     User findById(long id);
     List<User> findAll();
 }

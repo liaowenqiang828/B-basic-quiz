@@ -11,9 +11,11 @@ public class UserRepositoryImpl implements UserRepository {
     private List<User> userList = new ArrayList<>();
 
     @Override
-    public User save(User user) {
+    public long save(User user) {
+        int index = userList.size();
+        user.setId(index + 1);
         userList.add(user);
-        return user;
+        return index + 1;
     }
 
     @Override

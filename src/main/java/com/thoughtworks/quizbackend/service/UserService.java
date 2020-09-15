@@ -9,7 +9,6 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
         User user = User.builder()
-                .id(1)
                 .name("KAMIL")
                 .age(24)
                 .avatar("https://inews.gtimg.com/newsapp_match/0/3581582328/0")
@@ -23,5 +22,9 @@ public class UserService {
 
     public User getUserById(long id) {
         return userRepository.findById(id);
+    }
+
+    public long createUser(User user) {
+        return userRepository.save(user);
     }
 }
