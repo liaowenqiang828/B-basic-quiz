@@ -36,14 +36,14 @@ public class EducationService {
     }
 
     public List<Education> getEducationListByUserId(long userId) {
-        if (userId >= userRepository.findAll().size()) {
+        if (userId > userRepository.findAll().size()) {
             throw new GetResourceWithWrongIdException(ErrorMessageConstants.GET_USER_BY_WRONG_ID_ERROR + userId);
         }
         return educationRepository.findByUserId(userId);
     }
 
     public void addEducationByUserId(Education education, long userId) {
-        if (userId >= userRepository.findAll().size()) {
+        if (userId > userRepository.findAll().size()) {
             throw new GetResourceWithWrongIdException(ErrorMessageConstants.GET_USER_BY_WRONG_ID_ERROR + userId);
         }
         education.setUserId(userId);

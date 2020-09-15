@@ -23,7 +23,7 @@ public class UserService {
     }
 
     public User getUserById(long id) {
-        if (id >= userRepository.findAll().size()){
+        if (id > userRepository.findAll().size()){
             throw new GetResourceWithWrongIdException(ErrorMessageConstants.GET_USER_BY_WRONG_ID_ERROR + id);
         }
         return userRepository.findById(id);
