@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @Validated
+@CrossOrigin
 public class EducationController {
 
     private EducationService educationService;
@@ -18,6 +19,7 @@ public class EducationController {
         this.educationService = educationService;
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/users/{userId}/educations")
     public List<Education> getEducationListByUserId(@PathVariable("userId") long userId) {
         return this.educationService.getEducationListByUserId(userId);

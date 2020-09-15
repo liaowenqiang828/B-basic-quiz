@@ -1,5 +1,6 @@
 package com.thoughtworks.quizbackend.domian;
 
+import com.thoughtworks.quizbackend.constants.ErrorMessageConstants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,12 +15,12 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class Education {
     private long userId;
-    @NotNull
+    @NotNull(message = ErrorMessageConstants.YEAR_EMPTY_ERROR)
     private long year;
-    @NotNull
-    @Size(min = 1, max = 256)
+    @NotNull(message = ErrorMessageConstants.TITLE_EMPTY_ERROR)
+    @Size(min = 1, max = 256, message = ErrorMessageConstants.TITLE_LENGTH_ERROR)
     private String title;
-    @NotNull
-    @Size(min = 1, max = 4096)
+    @NotNull(message = ErrorMessageConstants.DESCRIPTION_EMPTY_ERROR)
+    @Size(min = 1, max = 4096, message = ErrorMessageConstants.EDUCATION_DESCRIPTION_LENGTH_ERROR)
     private String description;
 }

@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 @RestController
 @Validated
+@CrossOrigin
 public class UserController {
     private UserService userService;
     public UserController(UserService userService) {
