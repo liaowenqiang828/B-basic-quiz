@@ -1,6 +1,8 @@
 package com.thoughtworks.quizbackend.service;
 
+import com.thoughtworks.quizbackend.constants.ErrorMessageConstants;
 import com.thoughtworks.quizbackend.domian.User;
+import com.thoughtworks.quizbackend.exception.GetResourceWithWrongIdException;
 import com.thoughtworks.quizbackend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 @Service
@@ -21,6 +23,9 @@ public class UserService {
     }
 
     public User getUserById(long id) {
+        if (id >= userRepository.findAll().size()){
+            throw new GetResourceWithWrongIdException(ErrorMessageConstants.GET_USER_BY_WRONG_ID_ERROR + id);
+        }
         return userRepository.findById(id);
     }
 

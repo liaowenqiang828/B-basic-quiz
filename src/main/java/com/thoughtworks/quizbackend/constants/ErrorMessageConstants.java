@@ -26,10 +26,5 @@ public class ErrorMessageConstants {
     public static final int EDUCATION_DESCRIPTION_MIN_LENGTH = 1;
     public static final int EDUCATION_DESCRIPTION_MAX_LENGTH = 4096;
 
-    public static final String PASSWORD_LENGTH_ERROR = "password length must between 5 and 12";
-    public static final int PASSWORD_MIN_LENGTH = 5;
-    public static final int PASSWORD_MAX_LENGTH = 12;
-
-    public static final String EMAIL_CONTENT_ERROR = "email must has right format";
-    public static final String LOGIN_FAILED_ERROR = "username or password not matched";
+    public static final String GET_USER_BY_WRONG_ID_ERROR = "Cannot find basic info for user with id ";
 }
