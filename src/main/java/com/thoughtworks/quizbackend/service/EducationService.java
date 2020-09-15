@@ -1,7 +1,10 @@
 package com.thoughtworks.quizbackend.service;
 
+import com.thoughtworks.quizbackend.constants.ErrorMessageConstants;
 import com.thoughtworks.quizbackend.domian.Education;
+import com.thoughtworks.quizbackend.exception.GetResourceWithWrongIdException;
 import com.thoughtworks.quizbackend.repository.EducationReposition;
+import com.thoughtworks.quizbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +13,10 @@ import java.util.List;
 @Service
 public class EducationService {
     private EducationReposition educationRepository;
-    public EducationService(EducationReposition educationRepository) {
+    private UserRepository userRepository;
+    public EducationService(EducationReposition educationRepository, UserRepository userRepository) {
         this.educationRepository = educationRepository;
+        this.userRepository = userRepository;
         Education education1 = Education.builder()
                 .userId(1)
                 .year(2005)
@@ -31,10 +36,16 @@ public class EducationService {
     }
 
     public List<Education> getEducationListByUserId(long userId) {
+        if (userId >= userRepository.findAll().size()) {
+            throw new GetResourceWithWrongIdException(ErrorMessageConstants.GET_USER_BY_WRONG_ID_ERROR + userId);
+        }
         return educationRepository.findByUserId(userId);
     }
 
     public void addEducationByUserId(Education education, long userId) {
+        if (userId >= userRepository.findAll().size()) {
+            throw new GetResourceWithWrongIdException(ErrorMessageConstants.GET_USER_BY_WRONG_ID_ERROR + userId);
+        }
         education.setUserId(userId);
         educationRepository.save(education);
     }
