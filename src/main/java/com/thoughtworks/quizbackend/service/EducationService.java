@@ -33,4 +33,9 @@ public class EducationService {
     public List<Education> getEducationListByUserId(long userId) {
         return educationRepository.findByUserId(userId);
     }
+
+    public void addEducationByUserId(Education education, long userId) {
+        education.setUserId(userId);
+        educationRepository.save(education);
+    }
 }
