@@ -17,6 +17,7 @@ public class EducationService {
     public EducationService(EducationReposition educationRepository, UserRepository userRepository) {
         this.educationRepository = educationRepository;
         this.userRepository = userRepository;
+        // GTB: 初始化数据可以用 ApplicationRunner 来做
         Education education1 = Education.builder()
                 .userId(1)
                 .year(2005)
@@ -43,6 +44,7 @@ public class EducationService {
     }
 
     public void addEducationByUserId(Education education, long userId) {
+        // GTB: - 这样判断 userId 是否存在不合理，跟实现的耦合程度太高
         if (userId > userRepository.findAll().size()) {
             throw new GetResourceWithWrongIdException(ErrorMessageConstants.GET_USER_BY_WRONG_ID_ERROR + userId);
         }

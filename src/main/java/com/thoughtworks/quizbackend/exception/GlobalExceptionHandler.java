@@ -28,6 +28,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(GetResourceWithWrongIdException.class)
     public ResponseEntity handler(GetResourceWithWrongIdException exception) {
         String message = exception.getMessage();
+        // GTB: - 为什么这里不使用 ErrorResult？
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.NOT_FOUND.value());

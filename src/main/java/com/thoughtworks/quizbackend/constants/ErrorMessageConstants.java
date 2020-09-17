@@ -1,5 +1,6 @@
 package com.thoughtworks.quizbackend.constants;
 
+// GTB: + 集中管理 messages
 public class ErrorMessageConstants {
     public static final String USER_NAME_EMPTY_ERROR = "username can not be empty";
     public static final String USER_AGE_EMPTY_ERROR = "user age can not be empty";
