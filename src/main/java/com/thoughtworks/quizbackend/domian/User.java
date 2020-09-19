@@ -7,16 +7,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     @NotNull(message = ErrorMessageConstants.USER_NAME_EMPTY_ERROR)
     @Size(min = ValidateConstants.USERNAME_MIN_LENGTH,
             max = ValidateConstants.USERNAME_MAX_LENGTH,
@@ -34,4 +40,7 @@ public class User {
     @Size(max = ValidateConstants.USER_DESCRIPTION_MAX_LENGTH,
             message = ErrorMessageConstants.USER_DESCRIPTION_LENGTH_ERROR)
     private String description;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    private List<Education> educationList;
 }

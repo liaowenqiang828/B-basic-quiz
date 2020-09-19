@@ -7,15 +7,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
+@Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Education {
-    private long userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     @NotNull(message = ErrorMessageConstants.YEAR_EMPTY_ERROR)
     private long year;
     @NotNull(message = ErrorMessageConstants.TITLE_EMPTY_ERROR)
@@ -28,4 +32,8 @@ public class Education {
             max = ValidateConstants.EDUCATION_DESCRIPTION_MAX_LENGTH,
             message = ErrorMessageConstants.EDUCATION_DESCRIPTION_LENGTH_ERROR)
     private String description;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

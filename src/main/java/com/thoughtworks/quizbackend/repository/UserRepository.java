@@ -1,13 +1,10 @@
 package com.thoughtworks.quizbackend.repository;
 
 import com.thoughtworks.quizbackend.domian.User;
-import org.springframework.stereotype.Repository;
-
+import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
-@Repository
-public interface UserRepository {
-    long save(User user);
+public interface UserRepository extends CrudRepository<User, Long> {
     User findById(long id);
     List<User> findAll();
 }

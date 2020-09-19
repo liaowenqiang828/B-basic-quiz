@@ -2,10 +2,12 @@ package com.thoughtworks.quizbackend.controller;
 
 import com.thoughtworks.quizbackend.domian.User;
 import com.thoughtworks.quizbackend.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Transient;
 import javax.validation.Valid;
 
 @RestController
@@ -13,6 +15,7 @@ import javax.validation.Valid;
 @CrossOrigin
 public class UserController {
     private UserService userService;
+    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -25,7 +28,8 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/users")
-    public long createUser(@RequestBody @Valid User user) {
+    @Transient
+    public User createUser(@RequestBody @Valid User user) {
         return this.userService.createUser(user);
     }
 }

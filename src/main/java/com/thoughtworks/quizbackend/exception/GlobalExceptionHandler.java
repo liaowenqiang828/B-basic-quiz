@@ -7,9 +7,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -25,15 +24,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errorResult);
     }
 
-    @ExceptionHandler(GetResourceWithWrongIdException.class)
-    public ResponseEntity handler(GetResourceWithWrongIdException exception) {
+    @ExceptionHandler(IdNotMatchedException.class)
+    public ResponseEntity<ErrorResult> handler(IdNotMatchedException exception) {
         String message = exception.getMessage();
-        // GTB: - 为什么这里不使用 ErrorResult？
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.NOT_FOUND.value());
-        body.put("error", "Not Found");
-        body.put("message", message);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+        ErrorResult errorResult = ErrorResult.builder()
+                .message(message)
+                .error("Not Found")
+                .code(HttpStatus.NOT_FOUND.value())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return ResponseEntity.of(Optional.of(errorResult));
     }
 }
