@@ -16,7 +16,7 @@ public class UserService {
 
     public User getUserById(long id) {
         if (id > userRepository.findAll().size()){
-            throw new IdNotMatchedException(ErrorMessageConstants.GET_USER_BY_WRONG_ID_ERROR + id);
+            throw new IdNotMatchedException(ErrorMessageConstants.ID_NOT_MATCHED_ERROR + id);
         }
         return userRepository.findById(id);
     }

@@ -23,14 +23,14 @@ public class EducationService {
 
     public List<Education> getEducationListByUserId(long userId) {
         if (userId > userRepository.findAll().size()) {
-            throw new IdNotMatchedException(ErrorMessageConstants.GET_USER_BY_WRONG_ID_ERROR + userId);
+            throw new IdNotMatchedException(ErrorMessageConstants.ID_NOT_MATCHED_ERROR + userId);
         }
         return educationRepository.findAllByUser(userRepository.findById(userId));
     }
 
     public void addEducationByUserId(Education education, long userId) {
         if (userId > userRepository.findAll().size()) {
-            throw new IdNotMatchedException(ErrorMessageConstants.GET_USER_BY_WRONG_ID_ERROR + userId);
+            throw new IdNotMatchedException(ErrorMessageConstants.ID_NOT_MATCHED_ERROR + userId);
         }
         User user = userRepository.findById(userId);
         education.setUser(user);

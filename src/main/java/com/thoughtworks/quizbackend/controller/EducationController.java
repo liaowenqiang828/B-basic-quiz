@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Transient;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -30,7 +29,6 @@ public class EducationController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/users/{userId}/educations")
-    @Transient
     public void addEducationByUserId(@PathVariable("userId") long userId, @RequestBody @Valid Education education) {
         this.educationService.addEducationByUserId(education, userId);
     }

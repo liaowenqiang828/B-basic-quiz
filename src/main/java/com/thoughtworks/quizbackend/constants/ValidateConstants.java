@@ -1,6 +1,5 @@
 package com.thoughtworks.quizbackend.constants;
 
-// GTB: + 集中管理 constants
 public class ValidateConstants {
     public static final int USER_MIN_AGE = 17;
     public static final int USERNAME_MIN_LENGTH = 1;

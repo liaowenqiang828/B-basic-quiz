@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.Optional;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -33,6 +32,6 @@ public class GlobalExceptionHandler {
                 .code(HttpStatus.NOT_FOUND.value())
                 .timestamp(LocalDateTime.now())
                 .build();
-        return ResponseEntity.of(Optional.of(errorResult));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResult);
     }
 }

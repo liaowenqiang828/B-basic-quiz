@@ -1,6 +1,5 @@
 package com.thoughtworks.quizbackend.constants;
 
-// GTB: + 集中管理 messages
 public class ErrorMessageConstants {
     public static final String USER_NAME_EMPTY_ERROR = "username can not be empty";
     public static final String USER_AGE_EMPTY_ERROR = "user age can not be empty";
@@ -14,5 +13,5 @@ public class ErrorMessageConstants {
     public static final String TITLE_LENGTH_ERROR = "education title length should  between 1 and 256 bytes";
     public static final String DESCRIPTION_EMPTY_ERROR = "description can not be empty";
     public static final String EDUCATION_DESCRIPTION_LENGTH_ERROR = "education description length should  between 1 and 4096 bytes\"";
-    public static final String GET_USER_BY_WRONG_ID_ERROR = "Cannot find basic info for user with id ";
+    public static final String ID_NOT_MATCHED_ERROR = "Cannot find basic info for user with id ";
 }

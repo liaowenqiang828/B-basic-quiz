@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Transient;
 import javax.validation.Valid;
 
 @RestController
@@ -28,7 +27,6 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/users")
-    @Transient
     public User createUser(@RequestBody @Valid User user) {
         return this.userService.createUser(user);
     }
