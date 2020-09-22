@@ -12,8 +12,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -82,6 +83,19 @@ public class UserServiceTest {
                             .avatar("https://...")
                             .description("play for lakes of LA")
                             .build());
+        }
+    }
+
+    @Nested
+    class IsUserExist {
+        @Test
+        public void should_throw_id_not_matched_exception_when_user_null() {
+            IdNotMatchedException exception = assertThrows(
+                    IdNotMatchedException.class,
+                    () -> userService.isUserExist(null, 12345L)
+            );
+
+            assertTrue(exception.getMessage().contains(ErrorMessageConstants.ID_NOT_MATCHED_ERROR + 12345L));
         }
     }
 }
