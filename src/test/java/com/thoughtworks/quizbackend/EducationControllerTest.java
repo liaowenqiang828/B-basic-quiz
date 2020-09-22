@@ -117,5 +117,22 @@ public class EducationControllerTest {
                 verify(educationService, times(1)).addEducationByUserId(education, 123L);
             }
         }
+
+        @Nested
+        class WhenUserIdNotExists {
+            @Test
+            public void should_throw_id_not_matched_exception() throws Exception {
+                doThrow(new IdNotMatchedException(ErrorMessageConstants.ID_NOT_MATCHED_ERROR + 12345L))
+                        .when(educationService).addEducationByUserId(education, 12345L);
+
+                mockMvc.perform(post("/users/{id}/educations", 12345L)
+                        .content(jacksonTester.write(education).getJson())
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isNotFound())
+                        .andExpect(jsonPath("$.message", is(ErrorMessageConstants.ID_NOT_MATCHED_ERROR + 12345)));
+
+                verify(educationService, times(1)).addEducationByUserId(education, 12345L);
+            }
+        }
     }
 }
