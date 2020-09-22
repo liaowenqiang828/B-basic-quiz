@@ -6,6 +6,9 @@ import com.thoughtworks.quizbackend.exception.IdNotMatchedException;
 import com.thoughtworks.quizbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+
 @Service
 public class UserService {
     private UserRepository userRepository;
@@ -15,13 +18,18 @@ public class UserService {
     }
 
     public User getUserById(long id) {
-        if (id > userRepository.findAll().size()){
-            throw new IdNotMatchedException(ErrorMessageConstants.ID_NOT_MATCHED_ERROR + id);
-        }
-        return userRepository.findById(id);
+        User user = userRepository.findById(id);
+        isUserExist(user, id);
+        return user;
     }
 
     public User createUser(User user) {
         return userRepository.save(user);
+    }
+
+    private void isUserExist(User user, long userId) {
+        if (Objects.isNull(user)) {
+            throw new IdNotMatchedException(ErrorMessageConstants.ID_NOT_MATCHED_ERROR + userId);
+        }
     }
 }

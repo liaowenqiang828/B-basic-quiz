@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class EducationService {
@@ -22,18 +23,23 @@ public class EducationService {
     }
 
     public List<Education> getEducationListByUserId(long userId) {
-        if (userId > userRepository.findAll().size()) {
-            throw new IdNotMatchedException(ErrorMessageConstants.ID_NOT_MATCHED_ERROR + userId);
-        }
-        return educationRepository.findAllByUser(userRepository.findById(userId));
+        User user = userRepository.findById(userId);
+        isUserExist(user, userId);
+        return educationRepository.findAllByUser(user);
     }
 
     public void addEducationByUserId(Education education, long userId) {
-        if (userId > userRepository.findAll().size()) {
-            throw new IdNotMatchedException(ErrorMessageConstants.ID_NOT_MATCHED_ERROR + userId);
-        }
         User user = userRepository.findById(userId);
+        isUserExist(user, userId);
         education.setUser(user);
         educationRepository.save(education);
     }
+
+    private void isUserExist(User user, long userId) {
+        if (Objects.isNull(user)) {
+            throw new IdNotMatchedException(ErrorMessageConstants.ID_NOT_MATCHED_ERROR + userId);
+        }
+    }
+
+
 }
