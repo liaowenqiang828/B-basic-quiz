@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -66,6 +65,23 @@ public class UserServiceTest {
                     userService.getUserById(12345L);
                 });
             }
+        }
+    }
+
+    @Nested
+    class CreateUser {
+        @Test
+        public void should_return_user_when_create_user_success() {
+            when(userRepository.save(user)).thenReturn(user);
+
+            assertThat(userService.createUser(user))
+                    .isEqualTo(User.builder()
+                            .id(123L)
+                            .name("Bryant")
+                            .age(42)
+                            .avatar("https://...")
+                            .description("play for lakes of LA")
+                            .build());
         }
     }
 }
