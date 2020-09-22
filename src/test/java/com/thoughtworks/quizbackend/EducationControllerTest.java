@@ -24,6 +24,7 @@ import java.util.Collections;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(EducationController.class)
@@ -96,6 +97,24 @@ public class EducationControllerTest {
                         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                         .andExpect(jsonPath("$.message", is(ErrorMessageConstants.ID_NOT_MATCHED_ERROR + 12345)));
                 verify(educationService).getEducationListByUserId(12345L);
+            }
+        }
+    }
+
+    @Nested
+    class AddEducationByUserId {
+        @Nested
+        class WhenUserIdExists {
+            @Test
+            public void should_return_education_list_by_user_id() throws Exception {
+                doNothing().when(educationService).addEducationByUserId(education, 123L);
+
+                mockMvc.perform(post("/users/{id}/educations", 123L)
+                        .content(jacksonTester.write(education).getJson())
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isCreated());
+
+                verify(educationService, times(1)).addEducationByUserId(education, 123L);
             }
         }
     }
