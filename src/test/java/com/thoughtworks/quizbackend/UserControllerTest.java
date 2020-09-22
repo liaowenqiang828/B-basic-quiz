@@ -2,6 +2,7 @@ package com.thoughtworks.quizbackend;
 
 import com.thoughtworks.quizbackend.constants.ErrorMessageConstants;
 import com.thoughtworks.quizbackend.controller.UserController;
+import com.thoughtworks.quizbackend.domian.Education;
 import com.thoughtworks.quizbackend.domian.User;
 import com.thoughtworks.quizbackend.exception.IdNotMatchedException;
 import com.thoughtworks.quizbackend.service.UserService;
@@ -23,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserController.class)
@@ -38,9 +40,13 @@ public class UserControllerTest {
     private JacksonTester<User> userJacksonTester;
 
     private User user;
+    private Education education;
 
     @BeforeEach
     public void setUp() {
+//        education = Education.builder()
+//                .
+//                .build();
         user = User.builder()
                 .id(123L)
                 .name("Bryant")
@@ -106,6 +112,28 @@ public class UserControllerTest {
 
                 verify(userService).getUserById(122333L);
 
+            }
+        }
+    }
+
+    @Nested
+    class CreateUser {
+
+        @Nested
+        class WhenUserIsValid {
+
+            @Test
+            public void should_return_user_when_add_user_success() throws Exception {
+                when(userService.createUser(user)).thenReturn(user);
+
+                mockMvc.perform(post("/users")
+                        .content(userJacksonTester.write(user).getJson())
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                        .andExpect(status().isCreated())
+                        .andExpect(jsonPath("$.name", is("Bryant")));
+
+                verify(userService, times(1)).createUser(user);
             }
         }
     }
