@@ -2,7 +2,6 @@ package com.thoughtworks.quizbackend;
 
 import com.thoughtworks.quizbackend.constants.ErrorMessageConstants;
 import com.thoughtworks.quizbackend.controller.UserController;
-import com.thoughtworks.quizbackend.domian.Education;
 import com.thoughtworks.quizbackend.domian.User;
 import com.thoughtworks.quizbackend.exception.IdNotMatchedException;
 import com.thoughtworks.quizbackend.service.UserService;
@@ -40,13 +39,9 @@ public class UserControllerTest {
     private JacksonTester<User> userJacksonTester;
 
     private User user;
-    private Education education;
 
     @BeforeEach
     public void setUp() {
-//        education = Education.builder()
-//                .
-//                .build();
         user = User.builder()
                 .id(123L)
                 .name("Bryant")
