@@ -1,7 +1,9 @@
 package com.thoughtworks.quizbackend;
 
+import com.thoughtworks.quizbackend.constants.ErrorMessageConstants;
 import com.thoughtworks.quizbackend.domian.Education;
 import com.thoughtworks.quizbackend.domian.User;
+import com.thoughtworks.quizbackend.exception.IdNotMatchedException;
 import com.thoughtworks.quizbackend.repository.EducationReposition;
 import com.thoughtworks.quizbackend.repository.UserRepository;
 import com.thoughtworks.quizbackend.service.EducationService;
@@ -16,6 +18,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -63,6 +67,19 @@ public class EducationServiceTest {
                 assertThat(listFound.size()).isEqualTo(1);
                 assertThat(listFound.get(0).getYear()).isEqualTo(1996);
             }
+        }
+    }
+
+    @Nested
+    class IsUserExist {
+        @Test
+        public void should_throw_id_not_matched_exception_when_user_null() {
+            IdNotMatchedException exception = assertThrows(
+                    IdNotMatchedException.class,
+                    () -> educationService.isUserExist(null, 12345L)
+            );
+
+            assertTrue(exception.getMessage().contains(ErrorMessageConstants.ID_NOT_MATCHED_ERROR + 12345L));
         }
     }
 

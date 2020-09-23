@@ -35,7 +35,7 @@ public class EducationService {
         educationRepository.save(education);
     }
 
-    private void isUserExist(User user, long userId) {
+    public void isUserExist(User user, long userId) {
         if (Objects.isNull(user)) {
             throw new IdNotMatchedException(ErrorMessageConstants.ID_NOT_MATCHED_ERROR + userId);
         }
