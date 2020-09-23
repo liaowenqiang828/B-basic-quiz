@@ -20,7 +20,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class EducationServiceTest {
@@ -66,6 +66,22 @@ public class EducationServiceTest {
                 List<Education> listFound = educationService.getEducationListByUserId(123L);
                 assertThat(listFound.size()).isEqualTo(1);
                 assertThat(listFound.get(0).getYear()).isEqualTo(1996);
+            }
+        }
+    }
+
+    @Nested
+    class AddEducationByUserId {
+        @Nested
+        class WhenUserIdExists {
+            @Test
+            public void should_add_education_success() {
+                when(userRepository.findById(123L)).thenReturn(user);
+
+                educationService.addEducationByUserId(education, 123L);
+
+                verify(userRepository, times(1)).findById(123L);
+                verify(educationReposition, times(1)).save(education);
             }
         }
     }
